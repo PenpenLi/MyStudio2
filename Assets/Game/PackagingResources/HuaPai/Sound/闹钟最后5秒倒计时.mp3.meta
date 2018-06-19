@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: c514b53b76fc6944595b8902ce792d7c
+timeCreated: 1528288552
+licenseType: Free
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: "huapai/sound/\u95F9\u949F\u6700\u540E5\u79D2\u5012\u8BA1\u65F6.bytes"
+  assetBundleVariant: 

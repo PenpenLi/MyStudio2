@@ -14,6 +14,7 @@ local GetComponentWithPath = ModuleCache.ComponentManager.GetComponentWithPath
 function LoginView:initialize(...)
     -- 初始View
     View.initialize(self, "henanmj/module/login/henanmj_windowlogin.prefab", "HeNanMJ_WindowLogin", 0)
+    View.set_1080p(self)
     self.goPannelTest = ModuleCache.ComponentUtil.Find(self.root, "PannelTest")
 
     self.inputAccount = GetComponentWithPath(self.root, "PannelTest/InputAccount", ComponentTypeName.InputField)

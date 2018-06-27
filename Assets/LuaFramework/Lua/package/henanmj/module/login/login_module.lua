@@ -160,18 +160,22 @@ function LoginModule:on_model_event_bind()
 		end
 		self.isLogin = true
 
-		if(ModuleCache.GameManager.curProvince == 0) then
-			--ModuleCache.ModuleManager.show_module('henanmj',"setprovince")
-            ModuleCache.ModuleManager.show_public_module("operate");
-			return
+		ModuleCache.GameManager.curProvince = 1
+		ModuleCache.GameManager.curGameId = 6
+		ModuleCache.GameManager.set_used_playMode(ModuleCache.GameManager.curProvince, ModuleCache.GameManager.curGameId)
+		if ModuleCache.GameManager.curProvince ~= 0 and ModuleCache.GameManager.curGameId ~= 0 then
+			ModuleCache.ModuleManager.show_module_only("henanmj", "hall")
 		end
 
-		if(ModuleCache.GameManager.curGameId == 0) then
---			ModuleCache.ModuleManager.show_module('henanmj',"setprovince")
---			ModuleCache.ModuleManager.show_module("henanmj", "setplaymode",ModuleCache.GameManager.curProvince)
-            ModuleCache.ModuleManager.show_public_module("operate");
-			return
-		end
+		--if(ModuleCache.GameManager.curProvince == 0) then
+         --   ModuleCache.ModuleManager.show_public_module("operate");
+		--	return
+		--end
+        --
+		--if(ModuleCache.GameManager.curGameId == 0) then
+         --   ModuleCache.ModuleManager.show_public_module("operate");
+		--	return
+		--end
 	end)
 
 	self:subscibe_package_event("Event_Set_Play_Mode",function(eventHead, eventData)

@@ -146,6 +146,8 @@ function GameManager.init()
             GameManager.isFirstInGame = false
         end
     end
+
+    GameManager.FixedGame()
     --GameManager.get_mw_data("%7b%22parlorId%22%3a%220%22%2c%22ruleMsg%22%3a%228%e5%b1%80%204%e4%ba%ba%e7%8e%a9%e6%b3%95%20%e5%ba%84%e5%ae%b6%e5%b8%a6%202%e9%a9%ac%20%e5%8a%a0%e9%a9%ac%202%e9%a9%ac%20%e9%a9%ac%e8%b7%9f%e6%9d%a0%20%e5%b0%81%e9%a1%b6%2010%e9%a9%ac%20AA%e6%94%af%e4%bb%98%20%22%2c%22local%22%3a%22%e6%99%ae%e5%ae%81%e5%ae%a2%e5%ae%b6%22%2c%22gameName%22%3a%22DHGDQP_PNMJ%22%2c%22roomType%22%3a0%2c%22roomId%22%3a%22771463%22%2c%22type%22%3a2%7d")
 end
 
@@ -882,6 +884,11 @@ function GameManager.player_switch_majiang3D()
         return true
     end
     return false
+end
+
+function GameManager.FixedGame()
+    GameManager.select_province_id(1)
+    GameManager.select_game_id(6)
 end
 
 GameManager.init()

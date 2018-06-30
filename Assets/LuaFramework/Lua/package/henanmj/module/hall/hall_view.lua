@@ -42,7 +42,7 @@ function HallView:initialize()
     self.buttonPlayingInstrution = GetComponentWithPath(self.root, "Bottom/StatusBar/ButtonHowToPlay", ComponentTypeName.Button)
     self.buttonSetting = GetComponentWithPath(self.root, "Footer/Menu/But (7)/ButtonSettings", ComponentTypeName.Button)
     -- self.buttonBillboard = GetComponentWithPath(self.root, "Bottom/StatusBar/ButtonBillboard", ComponentTypeName.Button)
-    self.buttonRole = GetComponentWithPath(self.root, "Header/User/Head/Role", ComponentTypeName.Button)
+    self.BtnLookRloe = GetComponentWithPath(self.root,"Header/User/Head/Avatar/WH/Mask/OutFrame", ComponentTypeName.Button)
     self.buttonAddRoomCard = GetComponentWithPath(self.root, "Header/User/Currency/Gem", ComponentTypeName.Button)
     -- 免费领钻按钮
     self.buttonFreeDiamond = GetComponentWithPath(self.root, "Operate/Activity (1)", ComponentTypeName.Button)
@@ -67,14 +67,14 @@ function HallView:initialize()
     self.buttonRanking = GetComponentWithPath(self.root, "Side/LeaderBordBtn", ComponentTypeName.Button)
     self.buttonVerify.gameObject:SetActive(false);
 
-    self.textPlayerName = GetComponentWithPath(self.root, "Header/User/Head/TextName", ComponentTypeName.Text)
-    self.imagePlayerHeadIcon = GetComponentWithPath(self.root, "Header/User/Head/Avatar/Image", ComponentTypeName.Image)
+    self.NickName = GetComponentWithPath(self.root,"Header/User/Head/Avatar/WH/Mask/NameRoot/NickName", ComponentTypeName.Text)
+    self.ImageRole = GetComponentWithPath(self.root,"Header/User/Head/Avatar/WH/Mask/ImageRole", ComponentTypeName.Image)
     self.textPlayerID = GetComponentWithPath(self.root, "Header/User/Name/TextID", ComponentTypeName.Text)
     self.textCardNum = GetComponentWithPath(self.root, "Header/User/Currency/Gem/TextNum", ComponentTypeName.Text)
     -- self.textCoinName = GetComponentWithPath(self.root, "Top/StatusBar/DiamondCard/TextName", ComponentTypeName.Text)
     self.textGoldNum = GetComponentWithPath(self.root, "Header/User/Currency/Gold/TextNum", ComponentTypeName.Text)
 
-    self.textPlayerName.text = ''
+    self.NickName.text = ''
     self.textPlayerID.text = ''
     self.textCardNum.text = ''
     -- self.textCoinName.text = ""
@@ -174,9 +174,9 @@ end
 function HallView:showPlayerInfo(data)
 
     if data.headSprite then
-        self.imagePlayerHeadIcon.sprite = data.headSprite
+        self.ImageRole.sprite = data.headSprite
     end
-    self.textPlayerName.text = Util.filterPlayerName(data.nickname, 10)
+    self.NickName.text = Util.filterPlayerName(data.nickname, 10)
     self.textPlayerID.text = "ID:" .. data.userId
 end
 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0c481dd71a75f41198250c591ab70c69
-timeCreated: 1530197683
+guid: bd839b0d5e798c047bfaeabfdd56f29c
+timeCreated: 1530112045
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -67,22 +67,12 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: 47
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
     physicsShape: []
-  spritePackingTag: HeNanMJ_HallImage1080
+  spritePackingTag: 
   userData: 
-  assetBundleName: henanmj/module/hall/henanmj_hallimage1080.atlas
+  assetBundleName: 
   assetBundleVariant: 

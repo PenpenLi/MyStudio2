@@ -638,8 +638,7 @@ function HallModule:on_click(obj, arg)
         };
         ModuleCache.ModuleManager.show_module("public", "bag", data);
 
-    elseif obj == self.view.buttonRole.gameObject then
-        -- ModuleCache.ModuleManager.show_module("henanmj", "setting")
+    elseif obj == self.view.BtnLookRloe.gameObject then
         local data = {
             showType = 1,
             uid = self.modelData.roleData.userID,

@@ -13,9 +13,10 @@ local GetComponent = ModuleCache.ComponentManager.GetComponent
 function JoinRoomView:initialize(...)
     -- 初始View
     View.initialize(self, "henanmj/module/joinroom/henanmj_windowjoinroom.prefab", "HeNanMJ_WindowJoinRoom", 1)
+    View.set_1080p(self)
 
     local GetComponentWithPath = ModuleCache.ComponentManager.GetComponentWithPath
-    self.buttonClose = GetComponentWithPath(self.root, "closeBtn", ComponentTypeName.Button)
+    self.closeBtn = GetComponentWithPath(self.root, "closeBtn", ComponentTypeName.Button)
     self.roomNumTextArray = {}
     for i=1,6 do
         self.roomNumTextArray[i] = GetComponentWithPath(self.root, "Center/RoomNumInputPanel/RoomNum/InputedNums/text" .. i, ComponentTypeName.Text)
@@ -28,15 +29,9 @@ function JoinRoomView:initialize(...)
     self.keyboardMap.buttonClean = GetComponentWithPath(self.root, "Center/RoomNumInputPanel/KeyBoard/Keys/Key*", ComponentTypeName.Button)
     self.keyboardMap.buttonDelete = GetComponentWithPath(self.root, "Center/RoomNumInputPanel/KeyBoard/Keys/Key#", ComponentTypeName.Button)
     self.goldTextNum = GetComponentWithPath(self.root, "Center/RoomNumInputPanel/RoomNum/TextNum", ComponentTypeName.Text)
-    self.stateSwitcher = ModuleCache.ComponentManager.GetComponent(self.root, "UIStateSwitcher")
 
-    self.museumToggles= {}
-    self.museumToggles[1] = GetComponentWithPath(self.root, "Title_museum/1", ComponentTypeName.Toggle)
-    self.museumToggles[2] = GetComponentWithPath(self.root, "Title_museum/2", ComponentTypeName.Toggle)
-
-    self.nameInput = GetComponentWithPath(self.root,"Center/CreateMuseumPanel/name/InputField",ComponentTypeName.InputField)
-    self.idInput = GetComponentWithPath(self.root,"Center/CreateMuseumPanel/id/InputField",ComponentTypeName.InputField)
-    self.wxNumInput = GetComponentWithPath(self.root,"Center/CreateMuseumPanel/wxNum/InputField",ComponentTypeName.InputField)
+    self.InputRoomIdTipGo = GetComponentWithPath(self.root,"Center/RoomNumInputPanel/RoomNum/InputRoomIdTip", ComponentTypeName.Transform).gameObject
+    self:SetState_InputRoomIdTipGo(true)
 end
 
 function JoinRoomView:on_view_init()
@@ -69,5 +64,7 @@ function JoinRoomView:refreshGoldNumText(strNum)
     self.goldTextNum.text = strNum
 end
 
-
+function JoinRoomView:SetState_InputRoomIdTipGo(isShow)
+    ModuleCache.ComponentUtil.SafeSetActive(self.InputRoomIdTipGo.gameObject, isShow)
+end
 return JoinRoomView

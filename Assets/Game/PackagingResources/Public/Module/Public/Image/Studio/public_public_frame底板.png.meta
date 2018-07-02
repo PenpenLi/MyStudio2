@@ -82,7 +82,7 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape: []
-  spritePackingTag: HeNanMJ_JoinRoom
+  spritePackingTag: Public_PublicStudio
   userData: 
-  assetBundleName: henanmj/module/joinroom/henanmj_joinroom.atlas
+  assetBundleName: public/module/public/public_publicstudio.atlas
   assetBundleVariant: 

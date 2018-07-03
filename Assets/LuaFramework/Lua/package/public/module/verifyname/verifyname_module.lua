@@ -76,11 +76,11 @@ function verifynameModule:on_click(obj, arg)
         local idNum = self.view.inputIdNum.text
         local phoneNum = self.view.inputPhoneNum.text
         if string.len(name) < 1 then
-            ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写姓名")
-            return
+            --ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写姓名")
+            --return
         elseif string.len(idNum) ~= 18 then
-            ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写正确的身份证号")
-            return
+            --ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写正确的身份证号")
+            --return
         elseif string.len(phoneNum) ~= 11 then
             ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写正确的手机号")
         else
@@ -92,11 +92,11 @@ function verifynameModule:on_click(obj, arg)
         local idNum = self.view.inputIdNum.text
         local phoneNum = self.view.inputPhoneNum.text
         if string.len(name) < 1 then
-            ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写姓名")
-            return
+            --ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写姓名")
+            --return
         elseif string.len(idNum) ~= 18 then
-            ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写正确的身份证号")
-            return
+            --ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写正确的身份证号")
+            --return
         elseif string.len(phoneNum) ~= 11 then
             ModuleCache.ModuleManager.show_public_module("textprompt"):show_center_tips("请填写正确的手机号")
         elseif string.len(verifyNum) ~= 6 then

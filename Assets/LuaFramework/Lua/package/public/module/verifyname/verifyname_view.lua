@@ -16,6 +16,8 @@ local ComponentTypeName = ModuleCache.ComponentTypeName
 function verifynameView:initialize(...)
     -- 初始View 
     View.initialize(self, "public/module/verifyname/public_windowverifyname.prefab", "Public_WindowVerifyName", 1)
+    View.set_1080p(self)
+
     local GetComponentWithPath = ModuleCache.ComponentManager.GetComponentWithPath
     self.buttonClose = GetComponentWithPath(self.root, "ButtonClose", ComponentTypeName.Button)
     self.buttonGet = GetComponentWithPath(self.root, "ButtonGet", ComponentTypeName.Button)

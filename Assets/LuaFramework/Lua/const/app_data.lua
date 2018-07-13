@@ -7,6 +7,7 @@ AppData.Server_Host_Datas = {
     dhahqp =
     {
         test = "test.dhahqp.sincebest.com",
+        --test = "auth-t.junyeer.com",
         test2 = "test.dhanhuiqp.sincebest.com",
         api = "api.dhahqp.sincebest.com",
         vip = "vip.dhahqp.sincebest.com",

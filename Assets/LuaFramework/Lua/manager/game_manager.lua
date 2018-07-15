@@ -551,8 +551,14 @@ function GameManager.set_net_adress(ipList)
         return
     end
     local ip = dataList[1]
-    GameManager.netAdress.curServerHostIp = ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/"
-    GameManager.netAdress.httpCurApiUrl = "http://" .. ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/api/"
+    --print("===============拼接URL.....set_net_adress")
+    if(AppData.IsUseNewDomain) then
+        GameManager.netAdress.curServerHostIp = ip .. ":80/"
+        GameManager.netAdress.httpCurApiUrl = "http://" .. ip .. ":80/"
+    else
+        GameManager.netAdress.curServerHostIp = ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/"
+        GameManager.netAdress.httpCurApiUrl = "http://" .. ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/api/"
+    end
 end
 
 function GameManager.set_conmmon_net_adress(ipList)
@@ -561,8 +567,14 @@ function GameManager.set_conmmon_net_adress(ipList)
         return
     end
     local ip = dataList[1]
-    GameManager.netAdress.curServerHostIp = ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/"
-    GameManager.netAdress.httpCurApiUrl = "http://" .. ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/api/"
+    print("===============拼接URL.....set_conmmon_net_adress")
+    if(AppData.IsUseNewDomain) then
+        GameManager.netAdress.curServerHostIp = ip .. ":80/"
+        GameManager.netAdress.httpCurApiUrl = "http://" .. ip .. ":80/"
+    else
+        GameManager.netAdress.curServerHostIp = ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/"
+        GameManager.netAdress.httpCurApiUrl = "http://" .. ip .. ":8080/" .. AppData.Net_Url_Root_Directory .. "/api/"
+    end
 end
 
 --==============================--

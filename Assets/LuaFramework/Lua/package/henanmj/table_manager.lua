@@ -155,13 +155,21 @@ function TableManager:connect_login_server(onConnectedCallback, onLoginAccCallba
     local accountID = ModuleCache.PlayerPrefsManager.GetString(ModuleCache.AppData.PLAYER_PREFS_KEY_ACCOUNT, "0")
     local password = ModuleCache.PlayerPrefsManager.GetString(ModuleCache.AppData.PLAYER_PREFS_KEY_PASSWORD, "0")
     local loginURL = ""
+    local lastPieceUrl = ""
     if accountID ~= "0" and password ~= "0" and password ~= "" then
-        loginClient:connect(ModuleCache.GameManager.netAdress.curServerHostIp .. "login?type=token")
-        loginURL = ModuleCache.GameManager.netAdress.curServerHostIp .. "login?type=token"
+        if(AppData.IsUseNewDomain) then
+            lastPieceUrl = "?type=token"
+        else
+            lastPieceUrl = "login?type=token"
+        end
     else
-        loginClient:connect(ModuleCache.GameManager.netAdress.curServerHostIp .. "login")
-        loginURL = ModuleCache.GameManager.netAdress.curServerHostIp .. "login"
+        lastPieceUrl = "login"
+        if(AppData.IsUseNewDomain) then
+        else
+        end
     end
+    local loginURL = ModuleCache.GameManager.netAdress.curServerHostIp .. lastPieceUrl
+    loginClient:connect(loginURL)
     print("=====loginURL=",loginURL)
 
     loginClient:subscibe_connect_event(function(state)

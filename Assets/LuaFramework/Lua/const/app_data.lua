@@ -1,12 +1,13 @@
 local string = string
 AppData = { }
 local AppData = AppData
+AppData.IsUseNewDomain = false --使用新的域名
 
 AppData.Server_Host_Datas = {
     -- 安徽
     dhahqp =
     {
-        test = "test.dhahqp.sincebest.com",
+        test = AppData.IsUseNewDomain and "auth-t.junyeer.com" or "test.dhahqp.sincebest.com",
         --test = "auth-t.junyeer.com",
         test2 = "test.dhanhuiqp.sincebest.com",
         api = "api.dhahqp.sincebest.com",

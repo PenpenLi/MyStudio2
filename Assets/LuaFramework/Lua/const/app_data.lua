@@ -1,7 +1,7 @@
 local string = string
 AppData = { }
 local AppData = AppData
-AppData.IsUseNewDomain = false --使用新的域名
+AppData.IsUseNewDomain = true --使用新的域名
 
 AppData.Server_Host_Datas = {
     -- 安徽

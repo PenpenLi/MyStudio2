@@ -7,7 +7,7 @@ AppData.Server_Host_Datas = {
     -- 安徽
     dhahqp =
     {
-        test = AppData.IsUseNewDomain and "auth-t.junyeer.com" or "test.dhahqp.sincebest.com",
+        test = AppData.IsUseNewDomain and "gate-t.junyeer.com" or "test.dhahqp.sincebest.com",
         --test = "auth-t.junyeer.com",
         test2 = "test.dhanhuiqp.sincebest.com",
         api = "api.dhahqp.sincebest.com",

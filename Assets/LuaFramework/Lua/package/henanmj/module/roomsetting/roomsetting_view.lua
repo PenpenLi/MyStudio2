@@ -16,12 +16,13 @@ local PlayerPrefs = UnityEngine.PlayerPrefs
 function RoomSettingView:initialize(...)
     -- 初始View
     View.initialize(self, "henanmj/module/roomsetting/henanmj_windowroomsetting.prefab", "HeNanMJ_WindowRoomSetting", 1)
+    View.set_1080p(self)
 
     self._parent = GetComponentWithPath(self.root, "Center", ComponentTypeName.Transform)
 
     self.curTableData = TableManager.curTableData
 
-    self.buttonClose         = GetComponentWithPath(self.root, "BaseBackground/closeBtn", ComponentTypeName.Button)
+    self.BtnClose            = GetComponentWithPath(self.root, "BtnClose", ComponentTypeName.Button)
     self.buttonDissolveRoom  = GetComponentWithPath(self.root, "Center/ButtonDissolveRoom", ComponentTypeName.Button)
     self.buttonExitRoom      = GetComponentWithPath(self.root, "Center/Buttons/ButtonExitRoom", ComponentTypeName.Button)
     self.toggleYuYin         = GetComponentWithPath(self.root, "Center/Sound/ToggleYuYin", ComponentTypeName.Toggle)

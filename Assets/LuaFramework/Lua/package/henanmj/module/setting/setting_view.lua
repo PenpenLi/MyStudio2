@@ -18,13 +18,13 @@ local PlayerPrefs = UnityEngine.PlayerPrefs
 function SettingView:initialize(...)
     -- 初始View
     View.initialize(self, "henanmj/module/setting/henanmj_windowsetting.prefab", "HeNanMJ_WindowSetting", 1)
-
+    View.set_1080p(self)
     -- buttons
-    self.buttonClose         = GetComponentWithPath(self.root, "BaseBackground/closeBtn", ComponentTypeName.Button)
+    self.BtnClose            = GetComponentWithPath(self.root, "Center/BtnClose", ComponentTypeName.Button)
     self.buttonClear         = GetComponentWithPath(self.root, "Center/Buttons/ButtonClear", ComponentTypeName.Button)
     self.buttonUpdateGame    = GetComponentWithPath(self.root, "Center/Buttons/ButtonUpdate", ComponentTypeName.Button)
     self.buttonHowTo         = GetComponentWithPath(self.root, "Center/Buttons/ButtonHow", ComponentTypeName.Button)
-    self.buttonLogout        = GetComponentWithPath(self.root, "Center/Buttons/ButtonChange", ComponentTypeName.Button)
+    self.buttonLogout        = GetComponentWithPath(self.root, "Center/Role/ButtonChange", ComponentTypeName.Button)
     self.buttonExit          = GetComponentWithPath(self.root, "Center/Buttons/ButtonExitGame", ComponentTypeName.Button)
     self.buttonClearPlayerPrefs          = GetComponentWithPath(self.root, "Center/Buttons/ButtonClearPlayerPrefs", ComponentTypeName.Button)
     self.updateRedTip        = GetComponentWithPath(self.root, "Center/Buttons/ButtonUpdate/RedTip", ComponentTypeName.Transform).gameObject
@@ -36,10 +36,10 @@ function SettingView:initialize(...)
     self.toggleSound         = GetComponentWithPath(self.root, "Center/ToggleSound", ComponentTypeName.Toggle)
 
     -- role
-    self.textPlayerName      = GetComponentWithPath(self.root, "Center/Name", ComponentTypeName.Text)
+    self.textPlayerName      = GetComponentWithPath(self.root, "Center/NameRoot/Name", ComponentTypeName.Text)
     self.imagePlayerHeadIcon = GetComponentWithPath(self.root, "Center/Role/Avatar/Avatar/Image", ComponentTypeName.Image)
-    self.imageMen            = GetComponentWithPath(self.root, "Center/MenImg", ComponentTypeName.Transform).gameObject
-    self.imageWomen          = GetComponentWithPath(self.root, "Center/WomenImg", ComponentTypeName.Transform).gameObject
+    self.imageMen            = GetComponentWithPath(self.root, "Center/SexRoot/MenImg", ComponentTypeName.Transform).gameObject
+    self.imageWomen          = GetComponentWithPath(self.root, "Center/SexRoot/WomenImg", ComponentTypeName.Transform).gameObject
     self.textPlayerID        = GetComponentWithPath(self.root, "Center/Role/ID/TextID", ComponentTypeName.Text)
     self.textLocation        = GetComponentWithPath(self.root, "Center/Location", ComponentTypeName.Text)
 

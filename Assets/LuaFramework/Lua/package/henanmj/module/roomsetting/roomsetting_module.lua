@@ -381,7 +381,7 @@ end
 function RoomSettingModule:on_click(obj, arg)	
 	print(obj.name)
 	ModuleCache.SoundManager.play_sound("henanmj", "henanmj/sound/button.bytes", "button")
-	if obj == self.roomSettingView.buttonClose.gameObject then
+	if obj == self.roomSettingView.BtnClose.gameObject then
 		ModuleCache.ModuleManager.hide_module("henanmj", "roomsetting")
 		self:dispatch_package_event("Event_Refresh_Voice_Shake")
 		return

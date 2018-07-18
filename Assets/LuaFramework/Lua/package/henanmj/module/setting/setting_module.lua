@@ -150,7 +150,7 @@ end
 function SettingModule:on_click(obj, arg)	
 	print(obj.name)
 	ModuleCache.SoundManager.play_sound("henanmj", "henanmj/sound/button.bytes", "button")
-	if obj == self.settingView.buttonClose.gameObject then
+	if obj == self.settingView.BtnClose.gameObject then
 		ModuleCache.ModuleManager.hide_module("henanmj", "setting")
 		return
 	elseif obj == self.settingView.buttonLogout.gameObject then

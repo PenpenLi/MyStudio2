@@ -73,7 +73,12 @@ ModuleCache.LogManager.register()
 if not GameConfigProject.developmentMode then
     -- 非调试模式下关闭log
     GameConfigProject.netTransferDataShow = false
-    ModuleCache.GameManager.close_print()
+    local runtimePlatform = tostring(UnityEngine.Application.platform)
+    if runtimePlatform == "OSXEditor" or runtimePlatform == "WindowsEditor" then
+        ModuleCache.GameManager.open_print()
+    else
+        ModuleCache.GameManager.close_print()
+    end
     ModuleCache.GameManager.print_toggle_data.print = print
     print = function ( ... ) end
 else

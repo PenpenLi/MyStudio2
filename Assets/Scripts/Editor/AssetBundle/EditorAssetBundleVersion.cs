@@ -1099,8 +1099,18 @@ public class EditorAssetBundleVersion
     {
         new EditorWWW().WWW("http://test.dhahqp.sincebest.com:8080/dhahqp/bullfight/api/getIp", (m, n) => {
                 GetIpRetData data = JsonUtility.FromJson<GetIpRetData>(m);
-                
-                string url = mEditorGameBuildConfigurations.resourcesUploadServerHost + "/admin/app/asset/add?token=a9p7e2Tk5JIc4vXq9SBLeE63Cl0vA5Tq";
+
+            string url = "";
+            if (mEditorGameBuildConfigurations.IsUseJunYu)
+            {
+                url = mEditorGameBuildConfigurations.resourcesUploadServerHost + "/admin/app/asset/add?token=18a5c2cd37934cddefd257aeac6b8b1e";
+            }
+            else
+            {
+                url = mEditorGameBuildConfigurations.resourcesUploadServerHost + "/admin/app/asset/add?token=a9p7e2Tk5JIc4vXq9SBLeE63Cl0vA5Tq";
+            }
+            Debug.LogError("====上传url="+ url);
+
                 WWWForm wwwForm = new WWWForm();
 
                 wwwForm.AddField("platform", DataConfigProject.platform == "iOS" ? "IPhonePlayer" : DataConfigProject.platform);

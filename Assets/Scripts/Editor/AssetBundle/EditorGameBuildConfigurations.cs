@@ -40,16 +40,19 @@ public enum GameBuildResTag
     end,
 }
 
-public class GameConfig {    
+public class GameConfig
+{
     public string gameName;
     public string appName;
-    
+
 }
 
-public class EditorGameBuildConfigurations  {
+public class EditorGameBuildConfigurations
+{
 
+    public bool IsUseJunYu = true;
     //上传Version名字
-	public string gameName = "DHGDQP_RUNFAST";
+    public string gameName = "DHGDQP_RUNFAST";
 
     // 打包的名字    
     public string mAppBuildName = "DHQPYX";
@@ -60,31 +63,46 @@ public class EditorGameBuildConfigurations  {
 
     public bool isMaster = false;
 
-    public void SetBuildTime() {
+    public void SetBuildTime()
+    {
         mBuildTime = DateTime.Now.ToLocalTime().ToString("yyyy-MMdd-HHmm");
     }
 
-    public string appbuildName {
-        get { 
+    public string appbuildName
+    {
+        get
+        {
             string name;
-            if (mBuildTime.IsNullOrEmpty()) {
+            if (mBuildTime.IsNullOrEmpty())
+            {
                 SetBuildTime();
             }
-            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS) {
-                
-                if (GameConfigProject.instance.isIosEnterprise) {
-                    name = string.Format("XcodeProject_{0}_IosEnterprise_v{1}_{2}", mAppBuildName, Application.version, mBuildTime);         
-                } else {
-                    name = string.Format("XcodeProject_{0}_v{1}_{2}", mAppBuildName, Application.version, mBuildTime);         
+            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
+            {
+
+                if (GameConfigProject.instance.isIosEnterprise)
+                {
+                    name = string.Format("XcodeProject_{0}_IosEnterprise_v{1}_{2}", mAppBuildName, Application.version, mBuildTime);
+                }
+                else
+                {
+                    name = string.Format("XcodeProject_{0}_v{1}_{2}", mAppBuildName, Application.version, mBuildTime);
                 }
 
-            } else {
-                string extendName = "" ;
-                if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android) {
+            }
+            else
+            {
+                string extendName = "";
+                if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
+                {
                     extendName = ".apk";
-                } else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSX || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSXIntel || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSXIntel64) {
+                }
+                else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSX || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSXIntel || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSXIntel64)
+                {
                     extendName = ".app";
-                } else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64) {
+                }
+                else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64)
+                {
                     extendName = ".exe";
                 }
                 name = string.Format("{0}_v{1}_{2}{3}", mAppBuildName, Application.version, mBuildTime, extendName);
@@ -92,10 +110,11 @@ public class EditorGameBuildConfigurations  {
             return name;
         }
     }
-    
 
-    
-    public string appExportPath {
+
+
+    public string appExportPath
+    {
         get { return mAppExportPath; }
     }
 
@@ -109,16 +128,17 @@ public class EditorGameBuildConfigurations  {
     private bool[] gameBuildResBools;
 
     private GameConfigNet.IPAdress resourcesIpAdress;
-    
+
     //上传资源服务器的地址
     public string assetVersionUploadServerName = "";
 
     public Dictionary<GameConfigNet.IPAdress, string> resourcesIpDatas = new Dictionary<GameConfigNet.IPAdress, string>();
-    
+
 
     Dictionary<string, string[]> mPlayerSettingAndroid = new Dictionary<string, string[]>();
 
-    public void OpenAllGameBuildResBools() {
+    public void OpenAllGameBuildResBools()
+    {
         // int count = (int)GameBuildResTag.end - 1;
         // int packageNum = 0;
         // do {
@@ -179,43 +199,58 @@ public class EditorGameBuildConfigurations  {
 
     }
 
-    public void ResetGameBuildResBools() {
+    public void ResetGameBuildResBools()
+    {
         gameBuildResBools = new bool[(int)GameBuildResTag.end];
-        if(Application.identifier == "com.sincebestgames.dahuqipaiyouxi")
+        if (Application.identifier == "com.sincebestgames.dahuqipaiyouxi")
         {
             gameBuildResBools[(int)GameBuildResTag.henanmj] = true;
             // gameBuildResBools[(int)GameBuildResTag.majiang] = true;
-            #if UNITY_IPHONE
+#if UNITY_IPHONE
                 gameBuildResBools[(int)GameBuildResTag.runfast] = true;
                 gameBuildResBools[(int)GameBuildResTag.publictable] = true;
-            #endif
+#endif
             resourcesIpAdress = GameConfigNet.IPAdress.DHAHQPTest;
         }
     }
 
-    public EditorGameBuildConfigurations() {
-        if (mConfig == null) {
+    public EditorGameBuildConfigurations()
+    {
+        if (mConfig == null)
+        {
             mConfig = Object.FindObjectOfType<GameConfigProject>();
         }
         resourcesIpAdress = GameConfigNet.IPAdress.Userdefined;
         ResetGameBuildResBools();
 
-        if (EditorPrefs.GetString("GameBuildIsMaster", "false") == "true") {
+        if (EditorPrefs.GetString("GameBuildIsMaster", "false") == "true")
+        {
             isMaster = true;
-        } 
+        }
 
-        resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPTest, "http://114.55.99.139:9029");
-        resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPProduction, "http://commons.sincebest.com");
+        if (IsUseJunYu)
+        {
+            resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPTest, "http://comsweb-t.junyeer.com");
+            //resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPProduction, "http://commons.sincebest.com");
+        }
+        else
+        {
+            resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPTest, "http://114.55.99.139:9029");
+            resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPProduction, "http://commons.sincebest.com");
+        }
+
+
 
         string host;
         mAppExportPath = EditorPrefs.GetString("GameAppbuildPath", "");
-        
-        if (resourcesIpDatas.TryGetValue(resourcesIpAdress, out host)) {
+
+        if (resourcesIpDatas.TryGetValue(resourcesIpAdress, out host))
+        {
             resourcesUploadServerHost = host;
         }
 
         // appid                                                                    路径名字             keystorePass  keyaliasName     keyaliasPass
-        mPlayerSettingAndroid.Add("com.sincebest.jisukwx", new string[]{"jskawuxing.keystore", "jskawuxing", "jskwx", "jskawuxing"});
+        mPlayerSettingAndroid.Add("com.sincebest.jisukwx", new string[] { "jskawuxing.keystore", "jskawuxing", "jskwx", "jskawuxing" });
         mPlayerSettingAndroid.Add("com.sincebest.dahuanqingmajiang", new string[] { "duomimj.keystore", "hnduomimj", "dahuwangjiang", "dhwjmj" });
         mPlayerSettingAndroid.Add("common", new string[] { "sincebest.keystore", "sincebest", "sincebest", "sincebest" });
 
@@ -226,50 +261,62 @@ public class EditorGameBuildConfigurations  {
         PlayerSettings.stripEngineCode = true;
     }
 
-    public void SetAndroidKeystore() {
+    public void SetAndroidKeystore()
+    {
         string[] settingData;
-        if (!mPlayerSettingAndroid.TryGetValue(Application.identifier, out settingData)){
+        if (!mPlayerSettingAndroid.TryGetValue(Application.identifier, out settingData))
+        {
             mPlayerSettingAndroid.TryGetValue("common", out settingData);
         }
 
-        if (settingData != null){
-            if (Application.platform == RuntimePlatform.OSXEditor) {
+        if (settingData != null)
+        {
+            if (Application.platform == RuntimePlatform.OSXEditor)
+            {
                 PlayerSettings.Android.keystoreName = settingData[0];
-            } else {
+            }
+            else
+            {
                 PlayerSettings.Android.keystoreName = Application.dataPath + "/../" + settingData[0];
             }
             PlayerSettings.Android.keystorePass = settingData[1];
             PlayerSettings.Android.keyaliasName = settingData[2];
             PlayerSettings.Android.keyaliasPass = settingData[3];
-        } 
+        }
     }
 
 
-    public bool OnGUI() {
-        if (GameConfigProject.instance == null) {
+    public bool OnGUI()
+    {
+        if (GameConfigProject.instance == null)
+        {
             return true;
         }
         GUILayout.BeginVertical();
         GUILayout.Width(200);
-        if (GameEditorTools.DrawHeader("游戏设置", true)) {
+        if (GameEditorTools.DrawHeader("游戏设置", true))
+        {
             GameEditorTools.BeginContents();
             GUI.color = Color.yellow;
             GameConfigProject.instance.assetBundleFilePathEncrypt = GUILayout.Toggle(GameConfigProject.instance.assetBundleFilePathEncrypt, "资源路径加密");
             EditorGUILayout.BeginHorizontal();
             GameConfigProject.instance.developmentMode = GUILayout.Toggle(GameConfigProject.instance.developmentMode, "开启开发者模式");
-            #if UNITY_IPHONE
+#if UNITY_IPHONE
             GameConfigProject.instance.isIosEnterprise = GUILayout.Toggle(GameConfigProject.instance.isIosEnterprise, "iOS企业包");
-            #endif
+#endif
             EditorGUILayout.EndHorizontal();
             GUI.color = Color.cyan;
             EditorGUILayout.BeginHorizontal();
             PlayerSettings.bundleVersion = EditorGUILayout.TextField("游戏版本号：", Application.version);
-            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS) {
+            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
+            {
                 PlayerSettings.iOS.buildNumber = EditorGUILayout.TextField("BuildNumber", PlayerSettings.iOS.buildNumber);
-            } else {
+            }
+            else
+            {
                 PlayerSettings.Android.bundleVersionCode = EditorGUILayout.IntField("BuildNumber", PlayerSettings.Android.bundleVersionCode);
             }
-           
+
             EditorGUILayout.EndHorizontal();
             buildAppAutoIncreaseVersion = EditorGUILayout.Toggle("Build自增App版本号：", buildAppAutoIncreaseVersion);
 #if  UNITY_ANDROID
@@ -287,10 +334,13 @@ public class EditorGameBuildConfigurations  {
             GUILayout.Label("服务器地址");
             mConfig.net.ipAdressType = (GameConfigNet.IPAdress)EditorGUILayout.Popup((int)mConfig.net.ipAdressType, mConfig.net.ipAdressTypeName);
             GUILayout.EndHorizontal();
-            if (mConfig.net.ipAdressType == GameConfigNet.IPAdress.Userdefined) {
+            if (mConfig.net.ipAdressType == GameConfigNet.IPAdress.Userdefined)
+            {
                 mConfig.net.loginServerIp = EditorGUILayout.TextField("服务器IP", mConfig.net.loginServerIp);
                 mConfig.net.loginPort = EditorGUILayout.IntField("服务器Port", mConfig.net.loginPort);
-            } else {
+            }
+            else
+            {
                 GUI.enabled = false;
                 EditorGUILayout.TextField("服务器IP", mConfig.net.loginServerIp);
                 EditorGUILayout.IntField("服务器Port", mConfig.net.loginPort);
@@ -299,15 +349,18 @@ public class EditorGameBuildConfigurations  {
             GameEditorTools.EndContents();
         }
 
-        if (GameEditorTools.DrawHeader("Build设置", true)) {
+        if (GameEditorTools.DrawHeader("Build设置", true))
+        {
             GUILayout.BeginHorizontal();
 
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             EditorGUILayout.TextField("App导出路径", Path.Combine(appExportPath, appbuildName));
-            if (GUILayout.Button("选择")) {
+            if (GUILayout.Button("选择"))
+            {
                 string buildPath = EditorUtility.SaveFolderPanel("Build路径", mAppExportPath, "");
-                if (buildPath.Length != 0) {
+                if (buildPath.Length != 0)
+                {
                     mAppExportPath = buildPath;
                     EditorPrefs.SetString("GameAppbuildPath", buildPath);
                 }
@@ -315,15 +368,18 @@ public class EditorGameBuildConfigurations  {
             GUILayout.EndHorizontal();
 
             EditorUserBuildSettings.development = EditorGUILayout.Toggle("Development Build", EditorUserBuildSettings.development);
-            if (EditorUserBuildSettings.development) {
+            if (EditorUserBuildSettings.development)
+            {
                 EditorUserBuildSettings.connectProfiler = EditorGUILayout.Toggle("OpenProfiler", EditorUserBuildSettings.connectProfiler);
                 EditorUserBuildSettings.allowDebugging = EditorGUILayout.Toggle("ScriptDebug", EditorUserBuildSettings.allowDebugging);
             }
         }
-        if (GameEditorTools.DrawHeader("上传设置")) {
+        if (GameEditorTools.DrawHeader("上传设置"))
+        {
             GUI.color = Color.yellow;
             bool isMasterTmp = EditorGUILayout.Toggle("Master分支", isMaster);
-            if (isMasterTmp != isMaster) {
+            if (isMasterTmp != isMaster)
+            {
                 isMaster = isMasterTmp;
                 EditorPrefs.SetString("GameBuildIsMaster", isMaster ? "true" : "false");
             }
@@ -333,41 +389,49 @@ public class EditorGameBuildConfigurations  {
             resourcesIpAdress = (GameConfigNet.IPAdress)EditorGUILayout.Popup((int)resourcesIpAdress, mConfig.net.ipAdressTypeName);
             assetVersionUploadServerName = mConfig.net.ipAdressTypeName[(int)resourcesIpAdress];
             GUILayout.EndHorizontal();
-            if (GUI.changed) {
+            if (GUI.changed)
+            {
                 string host;
-                if (resourcesIpDatas.TryGetValue(resourcesIpAdress, out host)) {
+                if (resourcesIpDatas.TryGetValue(resourcesIpAdress, out host))
+                {
                     resourcesUploadServerHost = host;
                 }
             }
-            if (resourcesIpAdress == GameConfigNet.IPAdress.Userdefined) {
+            if (resourcesIpAdress == GameConfigNet.IPAdress.Userdefined)
+            {
                 resourcesUploadServerHost = EditorGUILayout.TextField("服务器Host", resourcesUploadServerHost);
-            } else {
+            }
+            else
+            {
                 GUI.enabled = false;
                 EditorGUILayout.TextField("服务器Host", resourcesUploadServerHost);
                 GUI.enabled = true;
             }
         }
 
-		GameEditorTools.DrawHeader("资源打包设置");
+        GameEditorTools.DrawHeader("资源打包设置");
         gameBuildResTag = 0;
         EditorGUILayout.BeginHorizontal();
         int allNum = Enum.GetNames(typeof(GameBuildResTag)).ToDynList().Count;
         int tagNum = 0;
         int curNum = 0;
-        foreach (GameBuildResTag tag in Enum.GetValues(typeof(GameBuildResTag))) {
-            if(tagNum == 0) EditorGUILayout.BeginVertical();
-            if (tag != GameBuildResTag.end) {
+        foreach (GameBuildResTag tag in Enum.GetValues(typeof(GameBuildResTag)))
+        {
+            if (tagNum == 0) EditorGUILayout.BeginVertical();
+            if (tag != GameBuildResTag.end)
+            {
                 ToggleGameBuildResTag(tag.ToString(), tag);
             }
             tagNum++;
-            if(tagNum == 4) EditorGUILayout.EndVertical();
+            if (tagNum == 4) EditorGUILayout.EndVertical();
             curNum++;
-            if(curNum == allNum && tagNum != 4)  EditorGUILayout.EndVertical();
-            if(tagNum == 4) tagNum = 0;
+            if (curNum == allNum && tagNum != 4) EditorGUILayout.EndVertical();
+            if (tagNum == 4) tagNum = 0;
         }
         EditorGUILayout.EndHorizontal();
         GUI.backgroundColor = Color.gray;
-        if (GUILayout.Button("Player Settings")) {
+        if (GUILayout.Button("Player Settings"))
+        {
             EditorApplication.ExecuteMenuItem("Edit/Project Settings/Player");
         }
         GUI.backgroundColor = Color.white;
@@ -375,10 +439,11 @@ public class EditorGameBuildConfigurations  {
         return true;
     }
 
-    private void ToggleGameBuildResTag(string title, GameBuildResTag tag) {
+    private void ToggleGameBuildResTag(string title, GameBuildResTag tag)
+    {
         GUILayout.BeginHorizontal();
         EditorGUILayout.LabelField(title, GUILayout.Width(50));
-        if(tag == GameBuildResTag.henanmj)
+        if (tag == GameBuildResTag.henanmj)
         {
             gameBuildResBools[(int)tag] = true;
             gameBuildResTag |= GameBuildResTag.henanmj;
@@ -390,16 +455,17 @@ public class EditorGameBuildConfigurations  {
         {
 
             gameBuildResBools[(int)tag] = EditorGUILayout.Toggle(gameBuildResBools[(int)tag], GUILayout.Width(50));
-            if(gameBuildResBools[(int)tag])
+            if (gameBuildResBools[(int)tag])
             {
                 gameBuildResTag |= tag;
             }
         }
         gameBuildResTag |= GameBuildResTag.henanmj;
         GUILayout.EndHorizontal();
-    } 
+    }
 
-    public void ResetKeystore() {
+    public void ResetKeystore()
+    {
         PlayerSettings.Android.keystoreName = "";
         PlayerSettings.Android.keystorePass = "";
         PlayerSettings.Android.keyaliasName = "";

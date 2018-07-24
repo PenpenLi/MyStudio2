@@ -78,7 +78,8 @@ public class EditorAssetBundleEditorTool
         {
             string itemPath = AssetDatabase.GetAssetPath(item);
             TextureImporter textureImporter = AssetImporter.GetAtPath(itemPath) as TextureImporter;
-            if (textureImporter != null && textureImporter.textureType == TextureImporterType.Sprite) {
+            if (textureImporter != null && textureImporter.textureType == TextureImporterType.Sprite)
+            {
                 textureImporter.spritePackingTag = "";
             }
             AutoProcessAsset(itemPath);
@@ -143,7 +144,7 @@ public class EditorAssetBundleEditorTool
                 {    //预制件
                     newAssetBundleName = name.Replace("Assets/Game/PackagingResources/", "");
                 }
-                else if(name.EndsWith(".asset"))
+                else if (name.EndsWith(".asset"))
                 {
                     newAssetBundleName = name.Replace("Assets/Game/PackagingResources/", "");
                 }
@@ -164,27 +165,32 @@ public class EditorAssetBundleEditorTool
                         string imageChildName = "";
                         indexStart = name.IndexOf("/Image/") + 7;
                         indexEnd = name.LastIndexOf("/");
-                        if (indexStart != indexEnd + 1) { //代表还有子文件夹
+                        if (indexStart != indexEnd + 1)
+                        { //代表还有子文件夹
                             length = indexEnd - indexStart;
                             imageChildName = name.Substring(indexStart, length);
                             // Debug.Log(imageChildName);
                         }
-                        if (!string.IsNullOrEmpty(imageChildName)) {
+                        if (!string.IsNullOrEmpty(imageChildName))
+                        {
                             spritePackingTag = string.Format("{0}_{1}{2}", packageName, moduleName, imageChildName);
-                        } else {
+                        }
+                        else
+                        {
                             spritePackingTag = string.Format("{0}_{1}", packageName, moduleName);
-                        }               
+                        }
 
                         // if (name.Contains("/Custom")) {
                         //     needSaveAndReimport = true;
                         // }         
 
                         bool needSaveAndReimport = false;
-                        if (!name.Contains("/Custom") && spritePackingTag != textureImporter.spritePackingTag ) {   //如果有指定Tag
+                        if (!name.Contains("/Custom") && spritePackingTag != textureImporter.spritePackingTag)
+                        {   //如果有指定Tag
                             textureImporter.spritePackingTag = spritePackingTag;
                             needSaveAndReimport = true;
                             textureImporter.SaveAndReimport();
-                        } 
+                        }
                         newAssetBundleName = string.Format("{0}/module/{1}/{2}.atlas", packageName, moduleName, textureImporter.spritePackingTag);
                     }
                 }
@@ -203,8 +209,9 @@ public class EditorAssetBundleEditorTool
                     needRefresh = false;
                 }
                 assetImporter.assetBundleName = newAssetBundleName;
-            } 
-            else if (name.Contains("/Effect")) {
+            }
+            else if (name.Contains("/Effect"))
+            {
                 Debug.Log(name);
                 string newAssetBundleName = "";
                 needRefresh = true;
@@ -226,23 +233,28 @@ public class EditorAssetBundleEditorTool
                         string imageChildName = "";
                         indexStart = name.IndexOf("/Image/") + 7;
                         indexEnd = name.LastIndexOf("/");
-                        if (indexStart != indexEnd + 1) { //代表还有子文件夹
+                        if (indexStart != indexEnd + 1)
+                        { //代表还有子文件夹
                             length = indexEnd - indexStart;
                             imageChildName = name.Substring(indexStart, length);
                             // Debug.Log(imageChildName);
                         }
-                        if (!string.IsNullOrEmpty(imageChildName)) {
+                        if (!string.IsNullOrEmpty(imageChildName))
+                        {
                             spritePackingTag = string.Format("{0}_Effect_{1}{2}", packageName, moduleName, imageChildName);
-                        } else {
+                        }
+                        else
+                        {
                             spritePackingTag = string.Format("{0}_Effect_{1}", packageName, moduleName);
-                        }                        
+                        }
 
                         bool needSaveAndReimport = false;
-                        if (spritePackingTag != textureImporter.spritePackingTag ) {   //如果有指定Tag
+                        if (spritePackingTag != textureImporter.spritePackingTag)
+                        {   //如果有指定Tag
                             textureImporter.spritePackingTag = spritePackingTag;
                             needSaveAndReimport = true;
                             textureImporter.SaveAndReimport();
-                        } 
+                        }
                         newAssetBundleName = string.Format("{0}/effect/{1}/{2}.atlas", packageName, moduleName, textureImporter.spritePackingTag);
                     }
                 }
@@ -256,7 +268,7 @@ public class EditorAssetBundleEditorTool
                     int length = indexEnd - indexStart;
                     string moduleName = newAssetBundleName.Substring(indexStart, length);
                     newAssetBundleName = string.Format("{0}/effect/{1}/animation.bytes", packageName, moduleName);
-                    
+
                 }
                 else if (name.Contains("Material/"))
                 {    //预制件
@@ -268,7 +280,7 @@ public class EditorAssetBundleEditorTool
                     int length = indexEnd - indexStart;
                     string moduleName = newAssetBundleName.Substring(indexStart, length);
                     newAssetBundleName = string.Format("{0}/effect/{1}/material.bytes", packageName, moduleName);
-                    
+
                 }
                 else if (name.EndsWith(".png") || name.EndsWith(".jpg"))
                 {            //贴图
@@ -278,7 +290,9 @@ public class EditorAssetBundleEditorTool
                         newAssetBundleName = name.Replace("Assets/Game/PackagingResources/", "");
                         newAssetBundleName = newAssetBundleName.Substring(0, newAssetBundleName.IndexOf(".", StringComparison.Ordinal));
                         newAssetBundleName = string.Format("{0}.atlas", newAssetBundleName);
-                    } else {
+                    }
+                    else
+                    {
                         newAssetBundleName = name.Replace("Assets/Game/PackagingResources/", "");
                     }
                 }
@@ -312,7 +326,7 @@ public class EditorGitConfig
     {
         get
         {
-            return string.Format("{0}.gitignore",Application.dataPath.Replace("Assets",""));
+            return string.Format("{0}.gitignore", Application.dataPath.Replace("Assets", ""));
         }
     }
     public static string[] openAbGit = new string[]{

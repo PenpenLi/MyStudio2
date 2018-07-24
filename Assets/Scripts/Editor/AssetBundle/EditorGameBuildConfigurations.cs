@@ -12,6 +12,7 @@ using System.IO;
 using UnityEditor;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
+using ABEditor;
 
 [System.Flags]
 public enum GameBuildResTag
@@ -50,7 +51,6 @@ public class GameConfig
 public class EditorGameBuildConfigurations
 {
 
-    public bool IsUseJunYu = true;
     //上传Version名字
     public string gameName = "DHGDQP_RUNFAST";
 
@@ -228,7 +228,7 @@ public class EditorGameBuildConfigurations
             isMaster = true;
         }
 
-        if (IsUseJunYu)
+        if (AseetBundleUpload.IsUseJunYu)
         {
             resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPTest, "http://comsweb-t.junyeer.com");
             //resourcesIpDatas.Add(GameConfigNet.IPAdress.DHAHQPProduction, "http://commons.sincebest.com");

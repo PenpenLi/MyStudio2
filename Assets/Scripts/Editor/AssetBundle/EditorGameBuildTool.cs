@@ -75,7 +75,7 @@ public class EditorGameBuildTool : EditorWindow
     {
         get
         {
-            if(mAppAutoPublishToFir) return "509014074736bd3326893fc301864579";//公司的tokenID
+            if (mAppAutoPublishToFir) return "509014074736bd3326893fc301864579";//公司的tokenID
             else if (mAppAutoPublishToBruceXuFir) return "1bcc91bc2184f4085ccb67fccce12e40";//Bruce.Xu的tokenID
             return "";
         }
@@ -113,8 +113,10 @@ public class EditorGameBuildTool : EditorWindow
         if (mEditorAssetBundleVersion == null)
         {
             mEditorAssetBundleVersion = new EditorAssetBundleVersion(mEditorGameBuildConfigurations);
-            mEditorAssetBundleVersion.versionUploadFileToServerSuccessCallback = (x ,y) => {
-               if (mAssetVersionUploadServerPushMsgToDingDingRobot) {
+            mEditorAssetBundleVersion.versionUploadFileToServerSuccessCallback = (x, y) =>
+            {
+                if (mAssetVersionUploadServerPushMsgToDingDingRobot)
+                {
                     AssetVersionUploadToServerHint(x, y);
                 }
             };
@@ -122,22 +124,22 @@ public class EditorGameBuildTool : EditorWindow
 
         GUILayout.Space(20);
         EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.BeginVertical(GUILayout.Width(500));
-                mEditorAssetBundleVersion.OnGUI();
-            EditorGUILayout.EndVertical();
-            //GUILayout.Space(500);
-            EditorGUILayout.BeginVertical();
-                EditorGUILayout.BeginHorizontal();
-                    mEditorGameBuildConfigurations.OnGUI();
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                    DrawBuild();
-                EditorGUILayout.EndHorizontal();
-            EditorGUILayout.EndVertical();
+        EditorGUILayout.BeginVertical(GUILayout.Width(500));
+        mEditorAssetBundleVersion.OnGUI();
+        EditorGUILayout.EndVertical();
+        //GUILayout.Space(500);
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.BeginHorizontal();
+        mEditorGameBuildConfigurations.OnGUI();
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.BeginHorizontal();
+        DrawBuild();
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
 
-        
-    } 
+
+    }
 
     void DrawBuild()
     {
@@ -145,32 +147,35 @@ public class EditorGameBuildTool : EditorWindow
         GUILayout.Space(10);
         EditorGUILayout.BeginVertical();
         GUILayout.Space(10);
-        
+
         EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("打包标志:",GUILayout.Width(80));
-            if(EditorGUILayout.ToggleLeft("Md5",ABEditor.ABVersionTools.isUseMd5))
-            {
-                ABEditor.ABVersionTools.isUseMd5 = true;
-                ABEditor.ABVersionTools.isUseHash = false;
-            }
-            if(EditorGUILayout.ToggleLeft("Hash",ABEditor.ABVersionTools.isUseHash))
-            {
-                ABEditor.ABVersionTools.isUseMd5 = false;
-                ABEditor.ABVersionTools.isUseHash = true;
-            }
+        EditorGUILayout.LabelField("打包标志:", GUILayout.Width(80));
+        if (EditorGUILayout.ToggleLeft("Md5", ABEditor.ABVersionTools.isUseMd5))
+        {
+            ABEditor.ABVersionTools.isUseMd5 = true;
+            ABEditor.ABVersionTools.isUseHash = false;
+        }
+        if (EditorGUILayout.ToggleLeft("Hash", ABEditor.ABVersionTools.isUseHash))
+        {
+            ABEditor.ABVersionTools.isUseMd5 = false;
+            ABEditor.ABVersionTools.isUseHash = true;
+        }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("独立版本", GUILayout.Width(80), GUILayout.Height(35)))
         {
             AssetDatabase.Refresh();
-            #if UNITY_ANDROID || UNITY_IOS || UNITY_IPHONE
-                GameConfigProject.instance.developmentMode = false;
-            #endif
+#if UNITY_ANDROID || UNITY_IOS || UNITY_IPHONE
+            GameConfigProject.instance.developmentMode = false;
+#endif
             if (mBuildAssetBundle)  //是否打包资源
             {
-                if (AssetBundleBuildScript.BuildAssetBundles(true)) {
+                if (AssetBundleBuildScript.BuildAssetBundles(true))
+                {
                     mEditorAssetBundleVersion.GenerationStandaloneVersion();
-                } else {
+                }
+                else
+                {
                     Debug.LogError("打包错误，停止迭代版本");
                 }
 
@@ -179,19 +184,23 @@ public class EditorGameBuildTool : EditorWindow
             if (mBuild)
             {
                 string lastProductName = PlayerSettings.productName;
-                if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android) {
+                if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
+                {
                     EditorUserBuildSettings.exportAsGoogleAndroidProject = mExportProject;
-                } else {
-                    EditorUserBuildSettings.exportAsGoogleAndroidProject = false;
-                    if(EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows 
-                        || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64)
-                        {
-                            PlayerSettings.productName = Application.identifier;
-                        }
                 }
-                
+                else
+                {
+                    EditorUserBuildSettings.exportAsGoogleAndroidProject = false;
+                    if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows
+                        || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64)
+                    {
+                        PlayerSettings.productName = Application.identifier;
+                    }
+                }
+
                 RemoveGameRoot();   //移除GameRoot
-                if (mEditorGameBuildConfigurations.buildAppAutoIncreaseVersion) {
+                if (mEditorGameBuildConfigurations.buildAppAutoIncreaseVersion)
+                {
                     PlayerSettings.bundleVersion = AutoIncreaseAppVersion();
                 }
                 mEditorGameBuildConfigurations.SetAndroidKeystore();
@@ -204,49 +213,64 @@ public class EditorGameBuildTool : EditorWindow
         }
         EditorGUILayout.BeginVertical();
         mBuild = GUILayout.Toggle(mBuild, "Build");
-        if (mBuild) {
+        if (mBuild)
+        {
             EditorGUILayout.BeginHorizontal();
             GUILayout.Space(18);
             EditorGUILayout.BeginVertical();
-            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS) {
+            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
+            {
                 mExportProject = true;
                 mBuildApp = GUILayout.Toggle(mBuildApp, "自动生成ipa");
                 mAutoRunPlayer = GUILayout.Toggle(mAutoRunPlayer, "AutoRunPlayer");
-                if (mAutoRunPlayer) {
+                if (mAutoRunPlayer)
+                {
                     mBuildApp = false;
                 }
                 mAutoRunPlayer = !mBuildApp;
-            } else if(EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android){
+            }
+            else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
+            {
                 mBuildApp = GUILayout.Toggle(mBuildApp, "生成App");
-                if (GUI.changed) {
+                if (GUI.changed)
+                {
                     mExportProject = !mBuildApp;
                 }
                 mExportProject = GUILayout.Toggle(mExportProject, "导出工程");
-                if (GUI.changed) {
+                if (GUI.changed)
+                {
                     mBuildApp = !mExportProject;
                 }
-            } else {
+            }
+            else
+            {
                 mBuildApp = GUILayout.Toggle(mBuildApp, "自动生成App");
                 mExportProject = false;
             }
 
 
 
-            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS || EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android) {
+            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS || EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
+            {
                 mAppAutoPublishToFir = GUILayout.Toggle(mAppAutoPublishToFir, "app自动上传fir");
 
                 if (mAppAutoPublishToFir)
                 {
-                    if (GUI.changed) {
+                    if (GUI.changed)
+                    {
                         mPushMsgToDingDingRobot = true;
                     }
                     mPushMsgToDingDingRobot = GUILayout.Toggle(mPushMsgToDingDingRobot, "开启钉钉机器人通知");
                     EditorGUILayout.LabelField("Fir日志内容:");
                     mFirLog = EditorGUILayout.TextArea(mFirLog, GUILayout.Height(80), GUILayout.Width(250));
-                } else {
+                }
+                else
+                {
                     mPushMsgToDingDingRobot = false;
                 }
-            } else {
+            }
+            else
+            {
                 mAppAutoPublishToFir = false;
                 mPushMsgToDingDingRobot = false;
             }
@@ -271,19 +295,22 @@ public class EditorGameBuildTool : EditorWindow
         if (GUILayout.Button("生成补丁", GUILayout.Width(80), GUILayout.Height(35)))
         {
             AssetDatabase.Refresh();
-            if (AssetBundleBuildScript.BuildAssetBundles(true)) {
+            if (AssetBundleBuildScript.BuildAssetBundles(true))
+            {
                 mEditorGameBuildConfigurations.OpenAllGameBuildResBools();
                 if (mEditorAssetBundleVersion.GenerationIterativeVersion() != null)
                 {
-                    if(mAutoUploadServer)
+                    if (mAutoUploadServer)
                     {
                         mEditorAssetBundleVersion.UploadFileToServer(true);
                     }
-                    
+
                 }
                 mEditorGameBuildConfigurations.ResetGameBuildResBools();
-            }else {
-                    Debug.LogError("打包错误，停止迭代版本");
+            }
+            else
+            {
+                Debug.LogError("打包错误，停止迭代版本");
             }
 
 
@@ -300,28 +327,31 @@ public class EditorGameBuildTool : EditorWindow
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
         EditorGUILayout.BeginVertical(GUILayout.Width(120));
-        if(mAutoUploadServerAll)
+        if (mAutoUploadServerAll)
         {
-            if(mEditorGameBuildConfigurations.mConfig.net.ipAdressTypeName.Length < 2) 
+            if (mEditorGameBuildConfigurations.mConfig.net.ipAdressTypeName.Length < 2)
             {
                 hosInt1 = 0;
                 hosInt2 = 0;
             }
 
             EditorGUILayout.BeginHorizontal();
-            hosInt1 = EditorGUILayout.Popup(hosInt1,mEditorGameBuildConfigurations.mConfig.net.ipAdressTypeName,GUILayout.Width(120));//.resourcesIpDatas.Keys.ToDynList().ToArray());
+            hosInt1 = EditorGUILayout.Popup(hosInt1, mEditorGameBuildConfigurations.mConfig.net.ipAdressTypeName, GUILayout.Width(120));//.resourcesIpDatas.Keys.ToDynList().ToArray());
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            hosInt2 = EditorGUILayout.Popup(hosInt2,mEditorGameBuildConfigurations.mConfig.net.ipAdressTypeName,GUILayout.Width(120));
+            hosInt2 = EditorGUILayout.Popup(hosInt2, mEditorGameBuildConfigurations.mConfig.net.ipAdressTypeName, GUILayout.Width(120));
             EditorGUILayout.EndHorizontal();
 
-            if (GUI.changed) {
+            if (GUI.changed)
+            {
                 string host;
-                if (mEditorGameBuildConfigurations.resourcesIpDatas.TryGetValue((GameConfigNet.IPAdress)hosInt1, out host)) {
+                if (mEditorGameBuildConfigurations.resourcesIpDatas.TryGetValue((GameConfigNet.IPAdress)hosInt1, out host))
+                {
                     host1 = host;
                 }
-                if (mEditorGameBuildConfigurations.resourcesIpDatas.TryGetValue((GameConfigNet.IPAdress)hosInt2, out host)) {
+                if (mEditorGameBuildConfigurations.resourcesIpDatas.TryGetValue((GameConfigNet.IPAdress)hosInt2, out host))
+                {
                     host2 = host;
                 }
                 // Debug.Log("GUI.changed----------------------------");
@@ -331,9 +361,10 @@ public class EditorGameBuildTool : EditorWindow
         }
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
-        
+
         mAssetVersionUploadServerPushMsgToDingDingRobot = GUILayout.Toggle(mAssetVersionUploadServerPushMsgToDingDingRobot, "开启钉钉机器人通知");
-        if (mAssetVersionUploadServerPushMsgToDingDingRobot) {
+        if (mAssetVersionUploadServerPushMsgToDingDingRobot)
+        {
             EditorGUILayout.LabelField("补丁内容:");
             mAssetVersionUploadServerLog = EditorGUILayout.TextArea(mAssetVersionUploadServerLog, GUILayout.Height(80), GUILayout.Width(250));
         }
@@ -374,29 +405,29 @@ public class EditorGameBuildTool : EditorWindow
         if (GUILayout.Button("开启git列表", GUILayout.Width(80), GUILayout.Height(20)))
         {
             string ignoreText = FileUtility.ReadAllText(EditorGitConfig.gitIgnorePath);
-            ignoreText = ignoreText.Replace(EditorGitConfig.closeAbGit,"");
-            for(int i = 0; i < EditorGitConfig.openAbGit.Length; i++)
+            ignoreText = ignoreText.Replace(EditorGitConfig.closeAbGit, "");
+            for (int i = 0; i < EditorGitConfig.openAbGit.Length; i++)
             {
-                ignoreText = ignoreText.Replace(EditorGitConfig.openAbGit[i],"");
+                ignoreText = ignoreText.Replace(EditorGitConfig.openAbGit[i], "");
                 ignoreText += EditorGitConfig.openAbGit[i];
             }
             //Debug.Log(ignoreText);
-            FileUtility.SaveFile(EditorGitConfig.gitIgnorePath,ignoreText);
+            FileUtility.SaveFile(EditorGitConfig.gitIgnorePath, ignoreText);
             EditorUtility.DisplayDialog("提示", "已开启git上传AB包配置！", "确定");
         }
 
         if (GUILayout.Button("屏蔽git列表", GUILayout.Width(80), GUILayout.Height(20)))
         {
             string ignoreText = FileUtility.ReadAllText(EditorGitConfig.gitIgnorePath);
-            ignoreText = ignoreText.Replace(EditorGitConfig.closeAbGit,"");
-            for(int i = 0; i < EditorGitConfig.openAbGit.Length; i++)
+            ignoreText = ignoreText.Replace(EditorGitConfig.closeAbGit, "");
+            for (int i = 0; i < EditorGitConfig.openAbGit.Length; i++)
             {
-                Debug.Log("Is contains = "+ignoreText.Contains(EditorGitConfig.openAbGit[i]));
-                ignoreText = ignoreText.Replace(EditorGitConfig.openAbGit[i],"");
+                Debug.Log("Is contains = " + ignoreText.Contains(EditorGitConfig.openAbGit[i]));
+                ignoreText = ignoreText.Replace(EditorGitConfig.openAbGit[i], "");
             }
             ignoreText += EditorGitConfig.closeAbGit;
             //Debug.Log(ignoreText);
-            FileUtility.SaveFile(EditorGitConfig.gitIgnorePath,ignoreText);
+            FileUtility.SaveFile(EditorGitConfig.gitIgnorePath, ignoreText);
             EditorUtility.DisplayDialog("提示", "已关闭git上传AB包配置！", "确定");
         }
 
@@ -408,20 +439,20 @@ public class EditorGameBuildTool : EditorWindow
             mInputNeedGetRealName = "";
             EditorUtility.DisplayDialog("真是路径", realName, "确定");
         }
-        
-    
+
+
 
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
     }
 
-    void OnDestroy()  
-    {  
-        if (mEditorGameBuildConfigurations != null)  
-        {  
+    void OnDestroy()
+    {
+        if (mEditorGameBuildConfigurations != null)
+        {
             mEditorGameBuildConfigurations.ResetKeystore();
-        }  
-    }  
+        }
+    }
 
 
 
@@ -437,16 +468,17 @@ public class EditorGameBuildTool : EditorWindow
         options |= EditorUserBuildSettings.allowDebugging ? BuildOptions.AllowDebugging : BuildOptions.None;
         options |= BuildOptions.CompressWithLz4;
         options |= EditorUserBuildSettings.exportAsGoogleAndroidProject ? BuildOptions.AcceptExternalModificationsToPlayer : BuildOptions.None;
-        if (mAutoRunPlayer) {
+        if (mAutoRunPlayer)
+        {
             options |= BuildOptions.AutoRunPlayer;
         }
-        
+
         if (string.IsNullOrEmpty(mEditorGameBuildConfigurations.appExportPath))
         {
             EditorUtility.DisplayDialog("警告", "请先设置App导出路径", "确定");
             return;
         }
-        
+
         mEditorGameBuildConfigurations.SetBuildTime();
         string apkFullPath = Path.Combine(mEditorGameBuildConfigurations.appExportPath, mEditorGameBuildConfigurations.appbuildName);
         mAPP_SavePath = apkFullPath;
@@ -465,14 +497,16 @@ public class EditorGameBuildTool : EditorWindow
                 {
                     AutoBuildIpa(apkFullPath, mEditorGameBuildConfigurations.appbuildName.Replace("XcodeProject_", ""), mAppAutoPublishToFir);
                 }
-                 else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows 
-                    || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64 
-                    || EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
+                else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows
+                   || EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64
+                   || EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
                 {
-                    if (mAppAutoPublishToFir) {
+                    if (mAppAutoPublishToFir)
+                    {
                         AutoPublishToFir_Windows();
                     }
-                    if (mAppAutoPublishToBruceXuFir) {
+                    if (mAppAutoPublishToBruceXuFir)
+                    {
                         AutoPublishToFir_Windows();
                     }
                 }
@@ -486,11 +520,12 @@ public class EditorGameBuildTool : EditorWindow
 
         if (gameRoot != null)
         {
-            Image image = gameRoot.transform.Find("Game/UIRoot/UIWindowParent/Canvas/TestWindow/Image").GetComponent<Image>();  
-            if (image.sprite != null) {
+            Image image = gameRoot.transform.Find("Game/UIRoot/UIWindowParent/Canvas/TestWindow/Image").GetComponent<Image>();
+            if (image.sprite != null)
+            {
                 // EditorUtility.DisplayDialog("补丁资源上传", "上传成功!\nurl = " + mEditorGameBuildConfigurations.resourcesUploadServerHost , "确定");
             }
-             DestroyImmediate(gameRoot);
+            DestroyImmediate(gameRoot);
             EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
         }
     }
@@ -527,69 +562,76 @@ public class EditorGameBuildTool : EditorWindow
     }
 
     //是否自动
-    private void AutoBuildIpa(string xcodeProjectPath, string ipaName, bool publishToFir) {
+    private void AutoBuildIpa(string xcodeProjectPath, string ipaName, bool publishToFir)
+    {
         ProcessStartInfo psi = new ProcessStartInfo();
         psi.FileName = "/bin/bash";
-        psi.CreateNoWindow=false;
+        psi.CreateNoWindow = false;
         psi.UseShellExecute = false;
         psi.RedirectStandardOutput = true;
-        string shell = Application.dataPath +"/Editor/build_ipa_publish_to_fir.sh" ;
+        string shell = Application.dataPath + "/Editor/build_ipa_publish_to_fir.sh";
         string arguments = " ";
         string xcodeprojPath = xcodeProjectPath + "/Unity-iPhone.xcodeproj" + " ";      //$1
         string ipaRootPath = mEditorGameBuildConfigurations.appExportPath + "/ipa/ ";   //$2
         string _ipaName = ipaName + ".ipa";                                             //$3
-        string firArguments = " \"fir bi " + xcodeProjectPath + "/Unity-iPhone.xcodeproj -S Unity-iPhone -E development -o " + 
+        string firArguments = " \"fir bi " + xcodeProjectPath + "/Unity-iPhone.xcodeproj -S Unity-iPhone -E development -o " +
                         mEditorGameBuildConfigurations.appExportPath + "/ipa/ -n " + ipaName + "\" ";   //$4
         string publishArguments = " ";
-        if (publishToFir) {
-//            publishArguments = "\"fir login " + m_api_token + "\" ";
+        if (publishToFir)
+        {
+            //            publishArguments = "\"fir login " + m_api_token + "\" ";
             publishArguments += "\"fir publish " + mEditorGameBuildConfigurations.appExportPath + "/ipa/" + _ipaName;
-            if (!mFirLog.IsNullOrEmpty()) {
-                publishArguments += " -c \'"+ mFirLog + "'";
+            if (!mFirLog.IsNullOrEmpty())
+            {
+                publishArguments += " -c \'" + mFirLog + "'";
             }
             publishArguments += " -L " + mEditorGameBuildConfigurations.appExportPath + "/ipa/fir_publish_log.txt\" ";            //$5
-        } 
+        }
         // arguments += xcodeProjectPath + "/Unity-iPhone.xcodeproj" + " ";                    //$1 目录
         // // arguments += "Unity-iPhone ";                                                       //$2 Sche
         // // arguments += "development ";                                                        //$3
         // arguments += mEditorGameBuildConfigurations.appExportPath + "/ipa/ ";               //$2
         // arguments += ipaName + " ";                                                         //$3
         // // arguments += "\"-p -T 509014074736bd3326893fc301864579 -L " + "'123123  123'" + "\" ";        //$4 $5 $6 $7 $8
-        arguments += xcodeprojPath + ipaRootPath + _ipaName + firArguments + publishArguments;  
+        arguments += xcodeprojPath + ipaRootPath + _ipaName + firArguments + publishArguments;
 
         string pushDingDingRobotArguments = " ";
-        if (mPushMsgToDingDingRobot) {
+        if (mPushMsgToDingDingRobot)
+        {
             pushDingDingRobotArguments = url_dingding + " ";                                  //$6
-            pushDingDingRobotArguments += "\"" + Application.productName + " " + DataConfigProject.platform +"\" ";   //$7
+            pushDingDingRobotArguments += "\"" + Application.productName + " " + DataConfigProject.platform + "\" ";   //$7
             pushDingDingRobotArguments += "\"";
-            pushDingDingRobotArguments += "\n###### " + _ipaName;   
-            pushDingDingRobotArguments += "\n###### 更新日志：";   
-            foreach (var content in mFirLog.Split('\n')) {
-                if (!content.IsNullOrEmpty()) {
+            pushDingDingRobotArguments += "\n###### " + _ipaName;
+            pushDingDingRobotArguments += "\n###### 更新日志：";
+            foreach (var content in mFirLog.Split('\n'))
+            {
+                if (!content.IsNullOrEmpty())
+                {
                     pushDingDingRobotArguments += "\n - ###### " + content;
                 }
             }
-            pushDingDingRobotArguments += "\n###### 更新链接：[http://fir.im/dhqpyxipa](http://fir.im/dhqpyxipa)\n";   
+            pushDingDingRobotArguments += "\n###### 更新链接：[http://fir.im/dhqpyxipa](http://fir.im/dhqpyxipa)\n";
             pushDingDingRobotArguments += "\" ";
         }
 
         arguments += pushDingDingRobotArguments;
         psi.Arguments = shell + arguments;
         Process p = Process.Start(psi);
-        string strOutput = p.StandardOutput.ReadToEnd(); 
+        string strOutput = p.StandardOutput.ReadToEnd();
         UnityEngine.Debug.Log(strOutput);
     }
 
-    private static void AutoPublishToFir(string appPath) {
+    private static void AutoPublishToFir(string appPath)
+    {
         ProcessStartInfo psi = new ProcessStartInfo();
         psi.FileName = "/bin/bash";
-        psi.CreateNoWindow=false;
+        psi.CreateNoWindow = false;
         psi.UseShellExecute = false;
         psi.RedirectStandardOutput = true;
-        string shell = Application.dataPath +"/Editor/publish_to_fir.sh" ;
+        string shell = Application.dataPath + "/Editor/publish_to_fir.sh";
         psi.Arguments = shell + " fir publish " + appPath;
-        Process p = Process.Start(psi); 
-        string strOutput = p.StandardOutput.ReadToEnd(); 
+        Process p = Process.Start(psi);
+        string strOutput = p.StandardOutput.ReadToEnd();
         UnityEngine.Debug.Log(strOutput);
     }
 
@@ -730,7 +772,8 @@ public class EditorGameBuildTool : EditorWindow
         byte[] post_data = System.Text.UTF8Encoding.UTF8.GetBytes(textMsg);
         Dictionary<string, string> JsonDic = new Dictionary<string, string>();
         JsonDic.Add("Content-Type", "application/json");
-        new EditorWWW().WWW(url_dingding, GetPost_data(post_data), JsonDic, (x, y) => {
+        new EditorWWW().WWW(url_dingding, GetPost_data(post_data), JsonDic, (x, y) =>
+        {
             Debug.Log(x);
             // if (x.Contains("success\":true"))
             // {
@@ -739,11 +782,12 @@ public class EditorGameBuildTool : EditorWindow
         });
     }
 
-    public void AssetVersionUploadToServerHint(string serverAddress, string version) {
+    public void AssetVersionUploadToServerHint(string serverAddress, string version)
+    {
         string str_md = "\n###### ";
         string textMsg = "{ \"msgtype\": \"markdown\", \"markdown\": {\"title\": \"{0}\",\"text\": \"{1}\"}}";
 
-        string title = string.Format("{0} {1} {2}分支 热更新补丁", Application.productName, DataConfigProject.platform, mEditorGameBuildConfigurations.isMaster ? "Master": "Develop");
+        string title = string.Format("{0} {1} {2}分支 热更新补丁", Application.productName, DataConfigProject.platform, mEditorGameBuildConfigurations.isMaster ? "Master" : "Develop");
         string updateServerAddress = str_md + "更新地址：" + serverAddress;
         string versionName = str_md + "版本号：" + version;
         string tFirLog = "";
@@ -765,7 +809,8 @@ public class EditorGameBuildTool : EditorWindow
         byte[] post_data = System.Text.UTF8Encoding.UTF8.GetBytes(textMsg);
         Dictionary<string, string> JsonDic = new Dictionary<string, string>();
         JsonDic.Add("Content-Type", "application/json");
-        new EditorWWW().WWW(url_dingding, GetPost_data(post_data), JsonDic, (x, y) => {
+        new EditorWWW().WWW(url_dingding, GetPost_data(post_data), JsonDic, (x, y) =>
+        {
             Debug.Log(x);
             ABEditor.AseetBundleUpload.Dispose();
         });

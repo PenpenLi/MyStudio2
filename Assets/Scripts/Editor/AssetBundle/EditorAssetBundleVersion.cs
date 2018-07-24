@@ -1113,6 +1113,7 @@ public class EditorAssetBundleVersion
         GetIterativeVersion(mOriginalVersions[mSelectIndexOriginalVersion]);
         string packagePath = string.Format("{0}{1}/{2}", DataConfigProject.externalAssetBundleVersionPath, mOriginalVersions[mSelectIndexOriginalVersion], mIterativeVersions[mSelectIndexIterativeVersion]);
         string uploadJson = GetUploadJson(mSelectIndexOriginalVersion, mSelectIndexIterativeVersion);
+        Debug.LogError("10===SaveFile,uploadJson=" + packagePath + "/package.txt");
         FileUtility.SaveFile(packagePath + "/package.txt", uploadJson);
         return fileNameList;
         //PutFile(string.Format("{0}{1}/{2}/Version.txt", DataConfigProject.externalAssetBundleVersionPath, mOriginalVersions[index], mNowTime));
@@ -1279,19 +1280,21 @@ public class EditorAssetBundleVersion
             return;
         }
         Debug.LogError("1====appVersion=" + appVersion);
-        Debug.Log(mOriginalVersions[mSelectIndexOriginalVersion]);
+        Debug.LogError("1-1=="+mOriginalVersions[mSelectIndexOriginalVersion]);
         string directoryPath = string.Format("{0}{1}/{2}", DataConfigProject.externalAssetBundleVersionPath, mOriginalVersions[mSelectIndexOriginalVersion], mIterativeVersions[mSelectIndexIterativeVersion]);
         if (directoryPath.Contains("Original"))
         {
             EditorUtility.DisplayDialog("操作无效", "原始版本不能上传！", "确定");
             return;
         }
+
+        Debug.LogError("2====" + directoryPath + "/package.txt");
         string uploadJson = FileUtility.ReadAllText(directoryPath + "/package.txt");
         // string uploadJson = GetUploadJson(curSelectOriginalVersion, curSelectIterativeVersion);
         // FileUtility.SaveFile(directoryPath + "/package.txt", uploadJson);
         // lzip.compress_File(1, directoryPath + "/public_incremental.pkg", directoryPath + "/package.txt", true);
         // lzip.compress_File(1, directoryPath + "/public_whole.pkg", directoryPath + "/package.txt", true);
-
+        Debug.LogError("3====" + directoryPath + "/version.txt");
         FileStream file = new FileStream(directoryPath + "/version.txt", FileMode.Open);
         StreamReader reader = new StreamReader(file);
         List<KeyValuePair<string, string>> fileList = new List<KeyValuePair<string, string>>();
@@ -1360,7 +1363,7 @@ public class EditorAssetBundleVersion
         }
 
         StringBuilder sb = new StringBuilder();
-        Debug.Log(data.lastVersion + "=============");
+        Debug.LogError("11============="+ data.lastVersion);
 
 
 

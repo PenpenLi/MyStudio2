@@ -139,7 +139,7 @@ namespace ABEditor
             Debug.Log("autorzation = " + authorization);
 
 
-
+            Debug.LogError("12==== " + url);
             HTTPRequest request = new HTTPRequest(new Uri(url), HTTPMethods.Put, true, OnRequestCallBack);
             request.OnUploadProgress = OnUploadProgress;
             request.UploadStream = new FileStream(file, FileMode.Open);
@@ -166,9 +166,8 @@ namespace ABEditor
             info.isSuccess = response.IsSuccess;
             info.errormsg = response.DataAsText;
 
-
-            Debug.Log("Finish upload " + info.fileName + ", path = " + info.filePath + ", size = " + info.size + ", isSuccess = " + info.isSuccess);
-            Debug.Log("errormsg = " + info.errormsg);
+            Debug.LogError("12==Finish upload " + info.fileName + ", path = " + info.filePath + ", size = " + info.size + ", isSuccess = " + info.isSuccess);
+            Debug.LogError("13==errormsg = " + info.errormsg);
 
 
 
